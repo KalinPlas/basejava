@@ -55,7 +55,7 @@ public class ArrayStorage {
         }
     }
 
-    private void storageSorter() { //Moves all null items to the end of the array.
+    private void storageSorter() { //Recreate storage with null items in the end of the array.
 
         Resume sortedArray[] = new Resume[10000];
 
