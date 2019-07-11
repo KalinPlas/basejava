@@ -46,8 +46,8 @@ public class ArrayStorage {
         for (int i = 0; i < size(); i++) {
 
             resume = storage[i];
-            comparableUuid = resume.uuid;
-            if (comparableUuid.equals(uuid)) {
+            
+            if (resume.uuid.equals(uuid)) {
                 storage[i] = null;
                 elementsCounter--;
                 storageSorter();
