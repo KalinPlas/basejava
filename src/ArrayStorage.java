@@ -2,50 +2,91 @@
  * Array based storage for Resumes
  */
 
-import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ArrayStorage {
 
-    //Resume[] storage = new Resume[10000];
-    // let's use optimal variant for this - ArrayList ( That's no cheating =) )
+    private Resume[] storage = new Resume[10000];
 
-    private ArrayList<Resume> storage = new ArrayList<>();
+    private static int elementsCounter = 0;
 
-    void clear() { storage.clear(); }
-
-    void save(final Resume r) { storage.add(r); }
-
-    Resume get(final String uuid) { // return resume by iterating over items and compares their uuids
-
-    String comparableUuid;
-    Resume resume;
-
-    for(int i = 0;i < size();i++) {
-
-            resume = storage.get(i);
-            comparableUuid = resume.uuid;
-            if(comparableUuid.equals(uuid)) return storage.get(i);
+    void clear() {
+        Arrays.fill(storage, null);
+        elementsCounter = 0;
     }
+
+    void save(final Resume resume) {
+        if (elementsCounter < 10000) {
+            storage[elementsCounter] = resume;
+            elementsCounter++;
+        } else System.out.println("Storage if full");
+    }
+
+    Resume get(final String uuid) {
+
+        Resume resume;
+
+        for (int i = 0; i < size(); i++) {
+
+            resume = storage[i];
+
+            if (resume.uuid.equals(uuid)) {
+                return storage[i];
+            }
+        }
         return null;
     }
 
-    void delete(final String uuid) { // delete resume by iterating over items and compares their uuids
+
+    void delete(final String uuid) {
 
         String comparableUuid;
         Resume resume;
 
-        for(int i = 0;i < size();i++) {
+        for (int i = 0; i < size(); i++) {
 
-            resume = storage.get(i);
+            resume = storage[i];
             comparableUuid = resume.uuid;
-            if(comparableUuid.equals(uuid)) storage.remove(i);
+            if (comparableUuid.equals(uuid)) {
+                storage[i] = null;
+                elementsCounter--;
+                storageSorter();
+            }
         }
+    }
+
+    private void storageSorter() { //Moves all null items to the end of the array.
+
+        Resume sortedArray[] = new Resume[10000];
+
+        int sortPoint = 0;
+        int newArrayPoint = 0;
+
+        for (int elemCnt = 0; elemCnt <= elementsCounter; elemCnt++) {
+            if (storage[sortPoint] != null) {
+                sortedArray[newArrayPoint] = storage[sortPoint];
+                sortPoint++;
+                newArrayPoint++;
+            } else sortPoint++;
+        }
+        storage = sortedArray;
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() { return storage.toArray(new Resume[0]); }
+    Resume[] getAll() {
 
-    int size() { return storage.size(); }
+        Resume[] resumes = new Resume[elementsCounter];
+
+        for (int i = 0; i < elementsCounter; i++) {
+            resumes[i] = storage[i];
+        }
+        return resumes;
+    }
+
+
+    int size() {
+        return elementsCounter;
+    }
 }
