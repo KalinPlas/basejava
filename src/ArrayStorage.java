@@ -40,7 +40,6 @@ public class ArrayStorage {
 
     void delete(final String uuid) {
 
-        String comparableUuid;
         Resume resume;
 
         for (int i = 0; i < size(); i++) {
