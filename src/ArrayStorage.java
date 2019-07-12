@@ -23,7 +23,7 @@ public class ArrayStorage {
     }
 
     Resume get(final String uuid) {
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < elementsCounter; i++) {
             if (uuid.equals(storage[i].toString())) {
                 return storage[i];
             }
@@ -32,7 +32,7 @@ public class ArrayStorage {
     }
 
     void delete(final String uuid) {
-        for (int i = 0; i < size(); i++) {
+        for (int i = 0; i < elementsCounter; i++) {
             if (uuid.equals(storage[i].toString())) {
                 storage[i] = null;
                 elementsCounter--;
