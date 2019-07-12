@@ -23,31 +23,21 @@ public class ArrayStorage {
     }
 
     Resume get(final String uuid) {
-
-        Resume resume;
-
-        for (int i = 0; i < size(); i++) {
-
-            resume = storage[i];
-
-            if (resume.uuid.equals(uuid)) {
+        Resume refResume = new Resume();
+        refResume.uuid = uuid;
+        for (int i = 0; i < elementsCounter; i++) {
+            if (refResume.toString().equals(storage[i].toString())) {
                 return storage[i];
             }
         }
         return null;
     }
 
-
     void delete(final String uuid) {
-
-        String comparableUuid;
-        Resume resume;
-
-        for (int i = 0; i < size(); i++) {
-
-            resume = storage[i];
-            comparableUuid = resume.uuid;
-            if (comparableUuid.equals(uuid)) {
+        Resume deletedResume = new Resume();
+        deletedResume.uuid = uuid;
+        for (int i = 0; i < elementsCounter; i++) {
+            if (deletedResume.toString().equals(storage[i].toString())) {
                 storage[i] = null;
                 elementsCounter--;
                 storageSorter();
@@ -55,13 +45,10 @@ public class ArrayStorage {
         }
     }
 
-    private void storageSorter() { //Moves all null items to the end of the array.
-
+    private void storageSorter() { //Recreate storage with null items in the end of the array.
         Resume sortedArray[] = new Resume[10000];
-
         int sortPoint = 0;
         int newArrayPoint = 0;
-
         for (int elemCnt = 0; elemCnt <= elementsCounter; elemCnt++) {
             if (storage[sortPoint] != null) {
                 sortedArray[newArrayPoint] = storage[sortPoint];
@@ -75,16 +62,14 @@ public class ArrayStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
+
     Resume[] getAll() {
-
         Resume[] resumes = new Resume[elementsCounter];
-
         for (int i = 0; i < elementsCounter; i++) {
             resumes[i] = storage[i];
         }
         return resumes;
     }
-
 
     int size() {
         return elementsCounter;
