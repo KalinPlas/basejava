@@ -35,24 +35,20 @@ public class ArrayStorage {
         for (int i = 0; i < elementsCounter; i++) {
             if (uuid.equals(storage[i].toString())) {
                 storage[i] = null;
+                if (i != storage.length) {
+                    nullShifter(i);
+                }
                 elementsCounter--;
-                storageSorter();
+                i = elementsCounter;
             }
         }
     }
 
-    private void storageSorter() { //Moves all null items to the end of the array.
-        Resume sortedArray[] = new Resume[10000];
-        int sortPoint = 0;
-        int newArrayPoint = 0;
-        for (int elemCnt = 0; elemCnt <= elementsCounter; elemCnt++) {
-            if (storage[sortPoint] != null) {
-                sortedArray[newArrayPoint] = storage[sortPoint];
-                sortPoint++;
-                newArrayPoint++;
-            } else sortPoint++;
+    private void nullShifter(int index) {
+        for (int i = index; i < elementsCounter; i++) {
+            storage[i] = storage[i + 1];
+            storage[i + 1] = null;
         }
-        storage = sortedArray;
     }
 
     /**
