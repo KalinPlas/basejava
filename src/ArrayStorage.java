@@ -11,15 +11,19 @@ public class ArrayStorage {
     private static int elementsCounter = 0;
 
     void clear() {
-        Arrays.fill(storage, null);
+        for (int i = 0; i < elementsCounter; i++) {
+            storage[i] = null;
+        }
         elementsCounter = 0;
     }
 
     void save(final Resume resume) {
-        if (elementsCounter < 10000) {
+        if (elementsCounter < storage.length) {
             storage[elementsCounter] = resume;
             elementsCounter++;
-        } else System.out.println("Storage if full");
+        } else {
+            System.out.println("Storage if full");
+        }
     }
 
     Resume get(final String uuid) {
@@ -32,23 +36,23 @@ public class ArrayStorage {
     }
 
     void delete(final String uuid) {
-        for (int i = 0; i < elementsCounter; i++) {
+        for (int i = 0; i < storage.length; i++) {
             if (uuid.equals(storage[i].toString())) {
                 storage[i] = null;
-                if (i != storage.length) {
+                if (i != storage.length - 1) {
                     nullShifter(i);
                 }
                 elementsCounter--;
-                i = elementsCounter;
+                break;
             }
         }
     }
 
     private void nullShifter(int index) {
-        for (int i = index; i < elementsCounter; i++) {
+        for (int i = index; i < elementsCounter - 1; i++) {
             storage[i] = storage[i + 1];
-            storage[i + 1] = null;
         }
+        storage[elementsCounter - 1] = null;
     }
 
     /**
